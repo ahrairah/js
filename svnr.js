@@ -7,7 +7,7 @@ function Insurant () {
   this.serialNumber = ''
   this.number = ''
   this.letterPosition = ''
-  this.string = ''
+  this.insuranceNumber = ''
 }
 
 Insurant.prototype.setSurname = function (surname) {
@@ -15,7 +15,7 @@ Insurant.prototype.setSurname = function (surname) {
 }
 
 Insurant.prototype.setBirthdate = function (birthdate) {
-  this.brithdate = birthdate
+  this.birthdate = birthdate
 }
 
 Insurant.prototype.setSex = function (sex) {
@@ -25,8 +25,11 @@ Insurant.prototype.setSex = function (sex) {
 Insurant.prototype.setSerialNumber = function () {
   if (this.sex === 'm') {
     this.serialNumber = Math.floor((Math.random() * (49 - 1)) + 1)
+    if (this.serialNumber < 10) {
+      this.serialNumber = '0' + this.serialNumber
+    }
   }else if (this.sex === 'w') {
-    this.serialNumber = Math.floor((Math.random() * (99 - 50) ) + 50)
+    this.serialNumber = Math.floor((Math.random() * (99 - 50)) + 50)
   }
 }
 
@@ -34,11 +37,30 @@ Insurant.prototype.extractDate = function () {
   var day = this.birthdate.substring(0, 2)
   var month = this.birthdate.substring(3, 5)
   var year = this.birthdate.substring(8)
-  return [day, month, year]
+  var date = [day, month, year]
+  return date
 }
 
 Insurant.prototype.buildNumber = function () {
+  var date = this.extractDate()
+  if (this.serialNumber === '') {
+    this.setSerialNumber()
+  }
+  if (this.letterPosition === '') {
+    this.letterPosition = getLetterPosition(this.surname)
+  }
+  this.number = this.areaNumber + date[0] + date[1] + date[2] + this.letterPosition + this.serialNumber
+}
 
+Insurant.prototype.createInsuranceNumber = function () {
+  var date = this.extractDate()
+  var weightedNumber = calculateWeighting(this.number)
+  var crossSum = calculateCrossSum(weightedNumber)
+  var checkSum = calculateChecksum(crossSum)
+  if (this.serialNumber === '') {
+    this.setSerialNumber()
+  }
+  this.insuranceNumber = this.areaNumber + date[0] + date[1] + date[2] + this.surname.substring(0, 1) + this.serialNumber + checkSum
 }
 
 function calculateCrossSum (number) {
@@ -51,6 +73,7 @@ function calculateCrossSum (number) {
 }
 
 function calculateChecksum (number) {
+  number = parseInt(number, 10)
   number %= 10
   return number
 }
@@ -58,13 +81,15 @@ function calculateChecksum (number) {
 function calculateWeighting (number) {
   number = number.toString().split('')
   var weighting = [2, 1, 2, 5, 7, 1, 2, 1, 2, 1, 2, 1]
-  var numString
+
+  var numString = ''
   for (var i in number) {
     number[i] = parseInt(number[i], 10) * weighting[i]
   }
   for (var i in number) {
-    numString += number[i].toString
+    numString += number[i].toString()
   }
+  return numString
 }
 
 function getLetterPosition (str) {
@@ -77,5 +102,16 @@ function getLetterPosition (str) {
     pos = ucAlpha.indexOf(letter)
   }
   pos += 1
+  if (pos < 10) {
+    pos = '0' + pos
+  }
   return pos
 }
+
+var i = new Insurant()
+i.setSurname('Lisa')
+i.setBirthdate('08.10.1989')
+i.setSex('w')
+i.buildNumber()
+i.createInsuranceNumber()
+console.log(i.insuranceNumber)
