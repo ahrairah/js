@@ -3,20 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>SVNr</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<div name = 'main'>
-  <div name= 'headline'>
+<div id = 'main'>
+  <div id= 'headline'>
     <h2>SVNr berechnen</h2>
   </div>
-  <div name = 'dSurname'>
+  <div id = 'left'>
     Nachname<br>
-    <input name = 'surname'></input>
+    <input id = 'surname'></input>
   </div>
-  <div name = 'dBirthdate'>
+  <div id = 'right'>
     Geburtsdatum<br>
-    <input name = 'birthdate'></input>
+    <input id = 'birthdate'></input>
+  </div>
+  <div id="lower">
+    <form>
+      <input type="radio" name="sex" value="m" checked> männlich
+      <br>
+      <input type="radio" name="sex" value="w"> weiblich
+    </form>
   </div>
 </div>
 </body>

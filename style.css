@@ -1,0 +1,21 @@
+#headline {
+    text-align: center;
+    background-color: #00cc00;
+  }
+#left {
+  text-align: center;
+  background-color: #cccccc;
+  float: left;
+  border-style: solid;
+  border-width: thin;
+}
+#right {
+  text-align: center;
+  background-color: #cccccc;
+  float: left;
+  border-style: solid;
+  border-width: thin;
+}
+#lower {
+  float: inherit;
+}

@@ -96,7 +96,7 @@ function getLetterPosition (str) {
   var letter = str.substring(0, 1)
   var lcAlpha = 'abcdefghijklmnopqrstuvwxyz'
   var ucAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  var pos = ''
+  var pos = -1
   pos = lcAlpha.indexOf(letter)
   if (pos === -1) {
     pos = ucAlpha.indexOf(letter)
