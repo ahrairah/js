@@ -109,8 +109,8 @@ function getLetterPosition (str) {
 }
 
 var i = new Insurant();
-i.setSurname('B');
-i.setBirthdate('06.06.1966');
-i.setSex('m');
+i.setSurname('H');
+i.setBirthdate('22.08.1949');
+i.setSex('w');
 i.createInsuranceNumber();
 console.log(i.insuranceNumber);
